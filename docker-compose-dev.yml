@@ -3,7 +3,7 @@ services:
   node-test:
     image: node:alpine
     environment: 
-      NODE_ENV=production
+      - NODE_ENV=production
     restart: always
     build:
       context: .
