@@ -1,0 +1,10 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker-compose -f ./docker-compose-dev.yml build
+
+script:
+  - docker-compose -f ./docker-compose-dev.yml up

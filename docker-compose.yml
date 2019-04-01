@@ -1,0 +1,11 @@
+version: '3'
+services:
+  node:
+    image: node:alpine
+    environment: 
+      NODE_ENV=production
+    build: .
+    restart: always
+    container_name: quillhash
+    ports: 
+      - "8000:8000"

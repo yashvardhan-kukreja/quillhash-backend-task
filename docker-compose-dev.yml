@@ -1,0 +1,13 @@
+version: '3'
+services:
+  node-test:
+    image: node:alpine
+    environment: 
+      NODE_ENV=production
+    restart: always
+    build:
+      context: .
+      dockerfile: dockerfile.dev
+    container_name: quillhash-test
+    ports: 
+      - "8000:8000"
