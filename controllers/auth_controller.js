@@ -19,9 +19,10 @@ module.exports.signup_user = (name, email, password, contact) => {
         }).catch(err => {
             console.error(err);
             if (err.code == 11000) {
+
                 reject({
                     meta: {
-                        status: false,
+                        success: false,
                         message: "User already exists with the same E-mail",
                         code: 400
                     }
@@ -29,7 +30,7 @@ module.exports.signup_user = (name, email, password, contact) => {
             } else {
                 reject({
                     meta: {
-                        status: false,
+                        success: false,
                         message: "An error occurred",
                         code: 500
                     }
@@ -48,7 +49,7 @@ module.exports.login_user = (email, password) => {
             if (!outputUser) {
                 reject({
                     meta: {
-                        status: false,
+                        success: false,
                         message: "No user found with the provided email",
                         code: 404
                     }
@@ -61,7 +62,7 @@ module.exports.login_user = (email, password) => {
             if (!validPassword) {
                 reject({
                     meta: {
-                        status: false,
+                        success: false,
                         message: "Wrong password entered",
                         code: 403
                     }
@@ -72,7 +73,7 @@ module.exports.login_user = (email, password) => {
         }).then(token => {
             resolve({
                 meta: {
-                    status: true,
+                    success: true,
                     message: "User logged in successfully !",
                     code: 200
                 },
@@ -85,7 +86,7 @@ module.exports.login_user = (email, password) => {
             console.error(err);
             reject({
                 meta: {
-                    status: false,
+                    success: false,
                     message: "An error occurred",
                     code: 500
                 }
