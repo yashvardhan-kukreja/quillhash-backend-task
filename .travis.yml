@@ -1,10 +1,10 @@
 sudo: required
 
 services:
-  - docker
+  - node
 
 before_install:
-  - docker-compose -f docker-compose-dev.yml build
+  - npm install
 
 script:
-  - docker-compose -f docker-compose-dev.yml up
+  - npm test
