@@ -6,11 +6,14 @@ const helmet = require("helmet");
 const compression = require("compression");
 const path = require("path");
 
+require("dotenv").config({path: path.resolve(__dirname) + "/.env"});
+
 const config = require("./config");
+const auth_router = require("./routes/auth_routes");
 const app = express();
 const port = process.env.PORT || 8000;
 
-const DB = (process.env.NODE_ENV == "test") ? config.LOCAL_DB : config.REMOTE_DB;
+const DB = (process.env.NODE_ENV == "test") ? config.TEST_DB : config.PRODUCTION_DB;
 
 mongoose.connect(DB, (err) => {
     if (err)
@@ -38,6 +41,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(helmet());
 app.use(compression());
+
+app.use("/auth", auth_router);
 
 app.use((err, req, res, next) => {
     const message = err.message;
