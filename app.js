@@ -30,7 +30,7 @@ app.get("/health-check", (req, res) => {
             message: "Healthcheck done. Server is running!",
             code: 200
         }
-    })
+    });
 });
 
 app.use(bodyParser.json());
