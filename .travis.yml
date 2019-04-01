@@ -1,7 +1,6 @@
 sudo: required
 
-services:
-  - node
+language: node_js
 
 before_install:
   - npm install
