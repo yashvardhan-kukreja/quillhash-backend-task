@@ -2,8 +2,16 @@ const User = require("./user_schema");
 const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
 const Promise = require("bluebird");
+const cloudinary = require("cloudinary");
+const config = require("../../config");
 
-const SECRET = require("../../config").JWT_SECRET;
+const SECRET = config.JWT_SECRET;
+
+cloudinary.config({
+    cloud_name: config.cloudinary_config.CLOUD_NAME,
+    api_key: config.cloudinary_config.API_KEY,
+    api_secret: config.cloudinary_config.API_SECRET
+});
 
 module.exports.fetch_user_by_id = (id) => {
     return User.findOne({_id: id});
@@ -72,4 +80,10 @@ module.exports.block_a_user = (current_user_id, block_user_id) => {
 
 module.exports.unblock_a_user = (current_user_id, block_user_id) => {
     return User.findOneAndUpdate({_id: current_user_id}, {$pull: {block_list: block_user_id}});
+};
+
+module.exports.upload_pic_to_cloud = (public_id, image_path, next) => {
+    cloudinary.v2.uploader.upload(image_path, {
+        public_id: public_id
+    }, next);
 };
