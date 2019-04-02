@@ -1,4 +1,5 @@
 const UserTransactions = require("../models/user/user_db_transactions");
+const ImageTransactions = require("../models/image/image_db_transactions");
 const Promise = require("bluebird");
 
 module.exports.verify_token = (token) => {
@@ -39,7 +40,7 @@ module.exports.verify_token = (token) => {
     });
 }
 
-module.exports.fetch_my_profile = (user_id) => {
+module.exports.fetch_profile = (user_id) => {
     return new Promise((resolve, reject) => {
         UserTransactions.fetch_user_by_id(user_id).then(outputUser => {
             if (!outputUser) {
@@ -72,5 +73,29 @@ module.exports.fetch_my_profile = (user_id) => {
                 }
             });
         });
+    });
+}
+
+module.exports.check_block_status = (main_user_id, blocked_or_unblocked_user_id) => {
+    return new Promise((resolve, reject) => {
+        UserTransactions.fetch_user_by_id(main_user_id).then(outputUser => {
+            if (outputUser.block_list.indexOf(blocked_or_unblocked_user_id) < 0) {
+                resolve({
+                    meta: {
+                        success: true,
+                        message: "User not blocked by the main user here",
+                        code: 200
+                    }
+                });
+            } else {
+                reject({
+                    meta: {
+                        success: false,
+                        message: "User blocked by the main user here",
+                        code: 403
+                    }
+                });
+            }
+        })
     });
 }
