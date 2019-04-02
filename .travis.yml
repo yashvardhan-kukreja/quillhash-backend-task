@@ -1,11 +1,10 @@
 sudo: required
 
-language: "node_js"
-node_js:
-    - "node"
+services:
+  - docker
 
 before_install:
-  - npm install
+  - docker-compose -f docker-compose-dev.yml build
 
 script:
-  - npm test
+  - docker-compose -f docker-compose-dev.yml up
