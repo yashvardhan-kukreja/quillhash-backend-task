@@ -65,3 +65,11 @@ module.exports.decode_token = (token) => {
         jwt.verify(token, SECRET, (err, output) => err ? reject(err) : resolve(output));
     });
 };
+
+module.exports.block_a_user = (current_user_id, block_user_id) => {
+    return User.findOneAndUpdate({_id: current_user_id}, {$addToSet: {block_list: block_user_id}});
+};
+
+module.exports.unblock_a_user = (current_user_id, block_user_id) => {
+    return User.findOneAndUpdate({_id: current_user_id}, {$pull: {block_list: block_user_id}});
+};
