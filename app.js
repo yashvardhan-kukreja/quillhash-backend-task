@@ -10,6 +10,7 @@ require("dotenv").config({path: path.resolve(__dirname) + "/.env"});
 
 const config = require("./config");
 const auth_router = require("./routes/auth_routes");
+const user_router = require("./routes/user_routes");
 const app = express();
 const port = process.env.PORT || 8000;
 
@@ -43,6 +44,7 @@ app.use(helmet());
 app.use(compression());
 
 app.use("/auth", auth_router);
+app.use("/user", user_router);
 
 app.use((err, req, res, next) => {
     const message = err.message;
