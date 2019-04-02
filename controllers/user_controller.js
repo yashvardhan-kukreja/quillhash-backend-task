@@ -99,3 +99,49 @@ module.exports.check_block_status = (main_user_id, blocked_or_unblocked_user_id)
         })
     });
 }
+
+module.exports.block_a_user = (current_user_id, blocked_user_id) => {
+    return new Promise((resolve, reject) => {
+        UserTransactions.block_a_user(current_user_id, blocked_user_id).then(output => {
+            resolve({
+                meta: {
+                    success: true,
+                    message: "User blocked successfully",
+                    code: 200
+                }
+            });
+        }).catch(err => {
+            console.error(err);
+            reject({
+                meta: {
+                    success: false,
+                    message: "An error occurred",
+                    code: 500
+                }
+            });
+        })
+    });
+}
+
+module.exports.unblock_a_user = (current_user_id, blocked_user_id) => {
+    return new Promise((resolve, reject) => {
+        UserTransactions.unblock_a_user(current_user_id, blocked_user_id).then(output => {
+            resolve({
+                meta: {
+                    success: true,
+                    message: "User unblocked successfully",
+                    code: 200
+                }
+            });
+        }).catch(err => {
+            console.error(err);
+            reject({
+                meta: {
+                    success: false,
+                    message: "An error occurred",
+                    code: 500
+                }
+            });
+        })
+    });
+}
