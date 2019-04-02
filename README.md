@@ -54,4 +54,4 @@ Two ways to run the test suite
   - Like an image (normal or super like)<br>
   ```PUT /image/like - body(image_id: <id of the image to be liked>, like_type: <normal or super>) - header("x-access-token": <jwt token received after login>)```
 --------
-Screenshots manual route testing on POSTman, and AWS terminal in the "screenshots" folder
+Screenshots depicting manual route testing on POSTman, and AWS terminal in the "screenshots" folder
