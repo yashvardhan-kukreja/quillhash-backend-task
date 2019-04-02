@@ -1,7 +1,7 @@
 version: '3'
 services:
   node-test:
-    image: node:alpine
+    image: node:latest
     environment: 
       - NODE_ENV=production
     restart: always

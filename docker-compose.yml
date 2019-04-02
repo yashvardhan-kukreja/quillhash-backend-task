@@ -1,11 +1,11 @@
 version: "3"
 services:
-  godutch-node:
-    container_name: godutch
+  node:
+    container_name: quillhash
     build:
       context: .
       dockerfile: dockerfile
-    image: node:alpine
+    image: node:latest
     environment: 
       - NODE_ENV=production
     restart: always
