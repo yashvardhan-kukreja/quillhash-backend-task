@@ -40,7 +40,7 @@ Two ways to run the test suite
   ``` GET /profile/me - header("x-access-token": <jwt token received after login>)```
   
   - Fetch other user's profile details if not blocked<br>
-  ```GET /profile?id=<sds1243sds> - header("x-access-token": <jwt token received after login>)```
+  ```GET /profile?id=<user_id_1212> - query("id": <id of the required user >)header("x-access-token": <jwt token received after login>)```
   
   - Block a user<br>
   ```PUT /block - body(id: <user_id of the user to be blocked>) - header("x-access-token": <jwt token received after login>)```
