@@ -161,6 +161,48 @@ describe("----------- Enter the tests -------------------", () => {
                     res.body.payload.profile.contact.should.be.a("string");
 
                     done();
+                }
+            });
+    });
+
+    it("should PUT a user in the block list", (done) => {
+        chai.request(server)
+            .put("/user/block")
+            .set("x-access-token", token)
+            .send({id: current_user_id})
+            .end((err, res) => {
+                if (err)
+                    done(err);
+                else {
+                    res.should.have.status(200);
+
+                    // Meta tests
+                    res.body.meta.success.should.be.a("boolean");
+                    res.body.meta.message.should.be.a("string");
+                    res.body.meta.code.should.be.a("number");
+
+                    done();
+                }
+            });
+    });
+
+    it("should PULL a user from the block list", (done) => {
+        chai.request(server)
+            .put("/user/unblock")
+            .set("x-access-token", token)
+            .send({id: current_user_id})
+            .end((err, res) => {
+                if (err)
+                    done(err);
+                else {
+                    res.should.have.status(200);
+
+                    // Meta tests
+                    res.body.meta.success.should.be.a("boolean");
+                    res.body.meta.message.should.be.a("string");
+                    res.body.meta.code.should.be.a("number");
+
+                    done();
                     process.exit(0);
                 }
             });
