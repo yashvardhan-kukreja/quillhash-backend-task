@@ -3,7 +3,7 @@ services:
   node-test:
     image: node:latest
     environment: 
-      - NODE_ENV=production
+      - NODE_ENV=test
     restart: always
     build:
       context: .
