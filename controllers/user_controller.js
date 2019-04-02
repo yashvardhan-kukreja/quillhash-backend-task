@@ -1,6 +1,7 @@
 const UserTransactions = require("../models/user/user_db_transactions");
 const ImageTransactions = require("../models/image/image_db_transactions");
 const Promise = require("bluebird");
+const fs = require("fs");
 
 module.exports.verify_token = (token) => {
     return new Promise((resolve, reject) => {
@@ -145,3 +146,62 @@ module.exports.unblock_a_user = (current_user_id, blocked_user_id) => {
         })
     });
 }
+
+module.exports.upload_pic_to_the_cloud = (id, image_path) => {
+    return new Promise((resolve, reject) => {
+
+        let public_id = id + "_" + Math.ceil(Math.random()*1000).toString();
+
+        UserTransactions.upload_pic_to_cloud(public_id, image_path, (err, outputResult) => {
+            if (err) {
+                console.error(err);
+                reject({
+                    meta: {
+                        success: false,
+                        message: "An error occurred",
+                        code: 500
+                    }
+                });
+            } else {
+                fs.unlinkSync(image_path);
+                resolve({
+                    meta: {
+                        success: true,
+                        message: "Image uploaded to the cloud successfully",
+                        code: 200
+                    },
+                    payload: {
+                        output: outputResult
+                    }
+                });
+            }
+        });
+    });
+};
+
+module.exports.save_pic = (image_url, user_id) => {
+    return new Promise((resolve, reject) => {
+        ImageTransactions.save_image(image_url, user_id).then(outputImage => {
+                resolve({
+                    meta: {
+                        success: true,
+                        message: "Image uploaded successfully",
+                        code: 200
+                    },
+                    payload: {
+                        image_url: outputImage.image_url
+                    }
+                });
+            }).catch(err => {
+                console.error(err);
+                reject({
+                    meta: {
+                        success: false,
+                        message: "An error occurred",
+                        code: 500
+                    }
+                });
+            });
+    });
+}
+
