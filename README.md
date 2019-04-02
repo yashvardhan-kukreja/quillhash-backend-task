@@ -30,7 +30,7 @@ Two ways to run the test suite
 ## API Endpoints:
 ### Authentication routes:
  - Register a user<br>
- ```POST /auth/regsiter - body(name, email, contact, password)```
+ ```POST /auth/register - body(name, email, contact, password)```
  
  - Login<br>
  ```POST /auth/login - body(email, password)```
