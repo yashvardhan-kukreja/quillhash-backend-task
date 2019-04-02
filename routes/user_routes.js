@@ -71,6 +71,16 @@ router.put("/image", upload.single("image"), (req, res) => {
     }
 });
 
+router.put("/image/like", (req, res) => {
+    let user_id = req.decoded._id;
+    let image_id = req.body.image_id;
+    let like_type = req.body.like_type;
+
+    UserController.like_image(image_id, like_type, user_id)
+        .then(data => res.status(data.meta.code).json(data))
+        .catch(err => res.status(err.meta.code).json(err));
+});
+
 
 
 module.exports = router;
