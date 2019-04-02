@@ -42,6 +42,7 @@ module.exports.verify_token = (token) => {
 }
 
 module.exports.fetch_profile = (user_id) => {
+    let current_user = null;
     return new Promise((resolve, reject) => {
         UserTransactions.fetch_user_by_id(user_id).then(outputUser => {
             if (!outputUser) {
@@ -53,17 +54,21 @@ module.exports.fetch_profile = (user_id) => {
                     }
                 });
             } else {
-                resolve({
-                    meta: {
-                        success: true,
-                        message: "Profile fetched successfully",
-                        code: 200
-                    },
-                    payload: {
-                        profile: outputUser
-                    }
-                });
+                current_user = outputUser;
+                return ImageTransactions.fetch_images_by_userid(outputUser._id);
             }
+        }).then(outputImages => {
+            resolve({
+                meta: {
+                    success: true,
+                    message: "Profile fetched successfully",
+                    code: 200
+                },
+                payload: {
+                    profile: current_user,
+                    images: outputImages
+                }
+            });
         }).catch(err => {
             console.error(err);
             reject({
@@ -202,6 +207,39 @@ module.exports.save_pic = (image_url, user_id) => {
                     }
                 });
             });
+    });
+}
+
+module.exports.like_image = (image_id, like_type, liker_id) => {
+    return new Promise((resolve, reject) => {
+        if (!((like_type == "normal") || (like_type == "super"))) {
+            reject({
+                meta: {
+                    success: false,
+                    message: "Wrong like type provided",
+                    code: 400
+                }
+            });
+        } else {
+            ImageTransactions.like_an_image(image_id, like_type, liker_id).then(data => {
+                resolve({
+                    meta: {
+                        success: true,
+                        message: `Liked(${like_type}) the image - ${data.image_url} !`,
+                        code: 200
+                    }
+                });
+            }).catch(err => {
+                console.error(err);
+                    reject({
+                        meta: {
+                            success: false,
+                            message: "An error occurred",
+                            code: 500
+                        }
+                    });
+            });
+        }
     });
 }
 
