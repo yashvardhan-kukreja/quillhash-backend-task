@@ -11,6 +11,7 @@ const User = require("./models/user/user_schema");
 describe("----------- Enter the tests -------------------", () => {
 
     let token = "";
+    let current_user_id = "";
 
     it("should DELETE the user collection\n\n", (done) => {
         User.remove({}, (err) => {
@@ -102,6 +103,7 @@ describe("----------- Enter the tests -------------------", () => {
                     res.body.payload.user.contact.should.be.a("string");
                     res.body.payload.token.should.be.a("string");
 
+                    current_user_id = res.body.payload.user._id;
                     token = res.body.payload.token;
 
                     done();                    
@@ -111,7 +113,34 @@ describe("----------- Enter the tests -------------------", () => {
 
     it("should GET my profile", (done) => {
         chai.request(server)
-            .get("/user/my-profile")
+            .get("/user/profile/me")
+            .set("x-access-token", token)
+            .end((err, res) => {
+                if (err)
+                    done(err);
+                else {
+                    res.should.have.status(200);
+
+                    // Meta tests
+                    res.body.meta.success.should.be.a("boolean");
+                    res.body.meta.message.should.be.a("string");
+                    res.body.meta.code.should.be.a("number");
+
+                    //Payload tests
+                    res.body.payload.profile._id.should.be.a("string");
+                    res.body.payload.profile.name.should.be.a("string");
+                    res.body.payload.profile.email.should.be.a("string");
+                    res.body.payload.profile.password.should.be.a("string");
+                    res.body.payload.profile.contact.should.be.a("string");
+
+                    done();
+                }
+            });
+    });
+
+    it("should GET profile of other user who hasn't blocked the current user", (done) => {
+        chai.request(server)
+            .get("/user/profile?id="+current_user_id)
             .set("x-access-token", token)
             .end((err, res) => {
                 if (err)
