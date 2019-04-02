@@ -1,5 +1,8 @@
 const UserController = require("../controllers/user_controller");
 const router = require("express").Router();
+const path = require("path");
+const multer = require("multer");
+const upload = multer({dest: path.resolve(__dirname, "uploads")});
 
 router.use((req, res, next) => {
     let token = req.headers["x-access-token"];
@@ -45,7 +48,29 @@ router.put("/unblock", (req, res) => {
     UserController.unblock_a_user(current_user_id, blocked_user_id)
         .then(data => res.status(data.meta.code).json(data))
         .catch(err => res.status(err.meta.code).json(err));
-
 });
+
+router.put("/image", upload.single("image"), (req, res) => {
+    if (req.file || req.files) {
+        let user_id = req.decoded._id;
+        let filename = req.file.filename;
+        let image_path = path.resolve(__dirname, "uploads", filename);
+
+        UserController.upload_pic_to_the_cloud(user_id, image_path)
+            .then(data => UserController.save_pic(data.payload.output.secure_url, user_id))
+            .then(data => res.status(data.meta.code).json(data))
+            .catch(err => res.status(err.meta.code).json(err));
+    } else {
+        res.status(400).json({
+            meta: {
+                success: false,
+                message: "Please provide an image",
+                code: 400
+            }
+        });
+    }
+});
+
+
 
 module.exports = router;
