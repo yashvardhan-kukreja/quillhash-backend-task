@@ -10,13 +10,15 @@ const User = require("./models/user/user_schema");
 
 describe("----------- Enter the tests -------------------", () => {
 
+    let token = "";
+
     it("should DELETE the user collection\n\n", (done) => {
         User.remove({}, (err) => {
             if (err)
                 done(err);
             else
                 done();
-        })
+        });
     });
 
     it("should GET healthcheck", (done) => {
@@ -100,9 +102,37 @@ describe("----------- Enter the tests -------------------", () => {
                     res.body.payload.user.contact.should.be.a("string");
                     res.body.payload.token.should.be.a("string");
 
+                    token = res.body.payload.token;
+
+                    done();                    
+                }
+            });      
+    });
+
+    it("should GET my profile", (done) => {
+        chai.request(server)
+            .get("/user/my-profile")
+            .set("x-access-token", token)
+            .end((err, res) => {
+                if (err)
+                    done(err);
+                else {
+                    res.should.have.status(200);
+
+                    // Meta tests
+                    res.body.meta.success.should.be.a("boolean");
+                    res.body.meta.message.should.be.a("string");
+                    res.body.meta.code.should.be.a("number");
+
+                    //Payload tests
+                    res.body.payload.profile._id.should.be.a("string");
+                    res.body.payload.profile.name.should.be.a("string");
+                    res.body.payload.profile.email.should.be.a("string");
+                    res.body.payload.profile.password.should.be.a("string");
+                    res.body.payload.profile.contact.should.be.a("string");
+
                     done();
                     process.exit(0);
-                    
                 }
             });
     });
