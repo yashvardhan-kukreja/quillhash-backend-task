@@ -28,4 +28,24 @@ router.get("/profile", (req, res) => {
         .catch(err => res.status(err.meta.code).json(err));
 });
 
+router.put("/block", (req, res) => {
+    let current_user_id = req.decoded._id;
+    let blocked_user_id = req.body.id;
+
+    UserController.block_a_user(current_user_id, blocked_user_id)
+        .then(data => res.status(data.meta.code).json(data))
+        .catch(err => res.status(err.meta.code).json(err));
+
+});
+
+router.put("/unblock", (req, res) => {
+    let current_user_id = req.decoded._id;
+    let blocked_user_id = req.body.id;
+
+    UserController.unblock_a_user(current_user_id, blocked_user_id)
+        .then(data => res.status(data.meta.code).json(data))
+        .catch(err => res.status(err.meta.code).json(err));
+
+});
+
 module.exports = router;
