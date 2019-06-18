@@ -3,11 +3,12 @@
 ## Introduction: 
 Developed Server Side Code for a basic dating app<br>
 ### Tech stack used:
- - **Server-Side Framework** - NodeJS, ExpressJS 
+ - **Server-Side Runtime Environment** - NodeJS
+ - **Server-Side Framework** - ExpressJS 
  - **Database** - MongoDB
  - **Testing** - chai framework, travis
  - **DevOps** - Docker (containerization)
- - **Deployment** - AWS and Heroku
+ - **Deployment** - AWS EC2 and Heroku
 -------
 ## Base URLs (Deployed on AWS and Heroku)
   - **AWS URL** - http://ec2-34-207-165-245.compute-1.amazonaws.com/
