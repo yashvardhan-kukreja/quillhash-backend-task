@@ -11,3 +11,4 @@ services:
     container_name: quillhash-test
     ports: 
       - "8000:8000"
+    command: npm test
