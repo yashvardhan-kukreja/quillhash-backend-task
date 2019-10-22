@@ -28,7 +28,7 @@ if (process.env.NODE_ENV != "test") {
 }
 
 app.get("/health-check", (req, res) => {
-    res.json({
+    res.status(200).json({
         meta: {
             success: true,
             message: "Healthcheck done. Server is running!",
@@ -38,7 +38,13 @@ app.get("/health-check", (req, res) => {
 });
 
 app.get("/favicon.ico", (req, res) => {
-    res.send("Hello, World!");
+    res.status(200).json({
+        meta: {
+            success: true,
+            message: "Hello, World!",
+            code: 200
+        }
+    });
 });
 
 app.use(bodyParser.json());
