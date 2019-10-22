@@ -37,6 +37,10 @@ app.get("/health-check", (req, res) => {
     });
 });
 
+app.get("/favicon.ico", (req, res) => {
+    res.send("Hello, World!");
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
