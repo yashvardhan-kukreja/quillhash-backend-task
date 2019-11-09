@@ -38,10 +38,20 @@ app.get('/', function(req, res){
 });
 
 app.get("/health-check", (req, res) => {
-    res.json({
+    res.status(200).json({
         meta: {
             success: true,
             message: "Healthcheck done. Server is running!",
+            code: 200
+        }
+    });
+});
+
+app.get("/favicon.ico", (req, res) => {
+    res.status(200).json({
+        meta: {
+            success: true,
+            message: "Hello, World!",
             code: 200
         }
     });

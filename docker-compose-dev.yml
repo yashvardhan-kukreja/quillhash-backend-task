@@ -7,7 +7,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: dockerfile.dev
+      dockerfile: dockerfile
     container_name: quillhash-test
     ports: 
       - "8000:8000"
