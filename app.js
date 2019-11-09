@@ -27,6 +27,16 @@ if (process.env.NODE_ENV != "test") {
     app.use(logger("dev"));
 }
 
+app.get('/', function(req, res){
+    res.sendFile(__dirname+"/views/main.html", function(err){
+        if (err){
+            console.log("Error occured while sending the response");
+        } else {
+            console.log("Successfully sent the response on the homepage");
+        }
+    });
+});
+
 app.get("/health-check", (req, res) => {
     res.json({
         meta: {
