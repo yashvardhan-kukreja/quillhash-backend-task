@@ -3,7 +3,7 @@
 ## Introduction: 
 Developed Server Side Code for a basic dating app<br>
 ### Tech stack used:
- - **Server-Side Runtime Environment** - NodeJS
+ - **Server-Side Runtime Environment** - NodeJS 
  - **Server-Side Framework** - ExpressJS 
  - **Database** - MongoDB
  - **Testing** - chai framework, travis
