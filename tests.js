@@ -210,5 +210,5 @@ if (process.env.NODE_ENV == "test") {
     });
 } else {
     console.log("\n------------- Tried to run tests in production mode. Please switch to test mode by making NODE_ENV=test in .env file ---------------------------\n\n");
-
+    process.exit(1);
 }
