@@ -204,7 +204,6 @@ if (process.env.NODE_ENV == "test") {
                         res.body.meta.code.should.be.a("number");
 
                         done();
-                        process.exit(0);
                     }
                 });
         });
