@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js --no-deprecation",
-    "test": "mocha ./tests --recursive --timeout 15000 --no-deprecation"
+    "test": "mocha ./tests --recursive --timeout 15000 --no-deprecation --exit"
   },
   "author": "",
   "license": "ISC",
