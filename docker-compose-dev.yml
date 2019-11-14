@@ -4,7 +4,6 @@ services:
     image: node:latest
     environment: 
       - NODE_ENV=test
-    restart: always
     build:
       context: .
       dockerfile: dockerfile
