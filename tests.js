@@ -201,7 +201,7 @@ if (process.env.NODE_ENV == "test") {
                         // Meta tests
                         res.body.meta.success.should.be.a("boolean");
                         res.body.meta.message.should.be.a("string");
-                        res.body.meta.code.should.be.a("string");
+                        res.body.meta.code.should.be.a("number");
 
                         done();
                     }
