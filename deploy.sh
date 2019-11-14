@@ -3,6 +3,7 @@ if [ ! $CURRENT_BUILD_TAG ]
   then
     CURRENT_BUILD_TAG="latest"
 fi
+echo "Build Tag: $CURRENT_BUILD_TAG"
 if [[ $(docker container ps --format {{.Names}} | grep "^quillhash-container\$") ]]
   then
     docker container stop quillhash-container
